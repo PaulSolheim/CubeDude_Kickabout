@@ -1,0 +1,198 @@
+CubeDude_KickAbout:
+
+Github:
+https://github.com/PaulSolheim/CubeDude_Kickabout
+
+Last ned ZIP-fil
+Unzip
+Godot
+Scann
+Velg mappe
+Rediger
+
+3D scene navigering
+Høyre musknapp nede (look around)
+Mushjulet (Zoom inn/ut)
+Høyre musknapp + Key:
+A-D Gå til Venstre-Høyre
+W-S Gå Fremover-Bakover
+Q-E Gå Nedover-Oppover
+
+La oss lage en scene med en bane:
++ knapp, skriv mesh, velg MeshInstance
+I Inspektøren, ved Mesh, klikk på <null>,
+velg "New PlaneMesh"
+Endre navnet på noden til "Pitch"
+
+La oss legge på Materiale:
+Klikk på Figuren ved Mesh
+ved Material, klikk <null>,
+velg "new SpatialMaterial",
+klikk på Kula,
+Velg "Albedo",
+Gå til GFX-mappa, dra tabletop.png til Texture <null>
+
+La oss lagre scenen:
+Ctrl-S, "Lag mappe" knappen, "Scenes", OK-knapp, Lagre-knapp
+
+La oss lagre materialet:
+Klikk "Diskett-ikonet", velg "Lagre", Gå opp et nivå, velg GFX-mappa,
+Skriv "Pitch.material", klikk Lagre-knappen
+
+La oss endre størrelsen på banen:
+Velg Pitch-noden i Scene-lista,
+klikk på ikonet ved Mesh,
+klikk Size og sett x:20 og y:15
+Flytt banen litt oppover så vi slipper å se rutemønsteret
+Ctrl-S for å lagre
+
+La oss lage en ball,
+Utfordring: Lage en ny scene, legg til en ball
+og lagre scenen med navnet "Ball" i Scenes-mappa.
+
+Ny scene, + node, "mesh", MeshInstance,
+rename til "Ball", Mesh <null>, new SphereMesh,
+klikk ikonet, under PrimitiveMesh, Klikk Material <null>,
+velg "new SpatialMaterial", klikk på kula,
+under Albedo, klikk ikonet ved Color, velg en kul farge,
+
+Klikk "Diskett-ikonet", velg "Lagre", velg GFX-mappa,
+Skriv "Ball.material", klikk Lagre-knappen
+
+La oss sette riktig størrelse på ballen:
+Sett, Radius: 0,25 og Height:0,5
+
+Ctrl-S for å lagre scenen, velg Scenes-mappa, Lagre-knappen
+
+La oss lage en Game scene:
+Ny scene, + node, "spa", velg Spatial, Lag-knapp
+rename node til "Game", Ctrl-S, velg Scenes-mappa, Lagre-knapp
+La oss lenke inn Pitch-scenen og Ballen:
+Lenke-ikonet, velg Pitch-scenen
+Klikk Game-noden, Lenke-ikonet, velg Ball-scenen
+Flytt Ballen litt opp i lufta over banen.
+La oss legge til et kamera:
+Velg Game-noden,
++ node, skriv "camera", velg "Camera",
+Flytt kameraet så det ser greit ut (Forhåndsvis)
+
+Trykk "Play" knappen, velg Game-scenen som Hovedscene.
+
+Hva! Ballen svever i lufta!
+
+Mesh i Godot er ikke et fysisk objekt, kun geometri
+For å bruke kollisjoner og fysikk må vi bruke Physicsbody
+Godot har 4 forskjellige typer:
+	StaticBody - Fast objekt som ikke flytter seg
+	RigidBody  - Objekt som reagerer på fysikk
+	KinematicBody - Objekt som kan bevege seg selv
+	VehicleBody - For biler, tog, fly o.l.
+
+Så vi må ha en av disse som Rot-node i Pitch og Ball scenene
+Den greiste måten å gjøre det på er å lage en mesh som under-node og kopiere verdiene
+før vi gjør om rot-noden til riktig type:
+Åpne Pitch-scenen, + node, skriv "mesh", velg "MeshInstance"
+Velg Pitch-noden, klikk "Skrutrekker og skiftenøkkel", velg "kopier parametre",
+velg MeshInstance-noden, klikk "Skrutrekker og skiftenøkkel", velg "lim inn parametre",
+Velg Pitch-noden, høyre-klikk, velg "Change type", skriv "static", velg "StaticBody"
+Vi må også legge på en kollisjons-sone,
+Velg Pitch-noden, + node, skriv "colli", velg CollisionShape, Lag knapp
+Klikk <null> ved siden av Shape, velg "new BoxShape"
+Klikk BoxShape, sett Extents til:
+x:10, Y: 0.1, z:7.5
+
+Velg Pitch noden, den har nå fysikkegenskaper
+som Friction og Bounce (sprettbarhet)
+sjekk at banen ikke svever over kollisjons-sonen
+klikk Translation og sett y:0
+Velg MeshInstance noden,
+klikk Translation og sett y:0.05
+Ctrl-S for å lagre Pitch scenen
+
+La oss gjøre det samme for Ball-scenen,
+men med RigidBody og SphereCollider:
+Åpne Ball-scenen, + node, skriv "mesh", velg "MeshInstance"
+Velg Ball-noden, klikk "Skrutrekker og skiftenøkkel", velg "kopier parametre",
+velg MeshInstance-noden, klikk "Skrutrekker og skiftenøkkel", velg "lim inn parametre",
+Velg Ball-noden, høyre-klikk, velg "Change type", skriv "rigid", velg "RigidBody"
+Vi må også legge på en kollisjons-sone,
+Velg Ball-noden, + node, skriv "colli", velg CollisionShape, Lag knapp
+Klikk <null> ved siden av Shape, velg "new SphereShape"
+klikk på <SphereShape> og sett radius: 0.25
+Ctrl-S for å lagre Ball scenen.
+
+Klikk Play-knappen og sjekk om ballen ramler ned på banen.
+
+La oss sette opp Kollisjons-lag:
+I menyen, velg Prosjekt - Prosjektinnstillinger
+Gå ned til 3d-physics
+Legg til våre egne navn for lagene:
+Layer 1			Pitch
+Layer 2			Ball
+Layer 3			Players
+
+Lukk knappen
+
+Gå til Pitch scenen, velg Pitch noden
+Gå til Collision og sett
+Layer: Pitch
+Mask:  Ball og Players
+
+Gå til Ball scenen, Velg Ball noden
+Gå til Collision og sett
+Layer: Ball
+Mask:  Pitch og Players
+
+Trykk "Play" knappen og sjekk at det fremdeles fungerer.
+
+Next up - Legge inn Cubedude og mål
+
+Velg Models mappa
+Velg Cubedude mappa
+dobbeltklikk Cubedude.dae
+velg "New Inherited" !
+
+Import av Modellen har laget et materiale som er grått
+for å sette riktig texture:
+dobbeltklikk CubeDude.material filen
+Gå til Albedo
+Dra filen "11 CubeDude.png" til Texture <null>
+
+Klikk Metallic:
+Sett Metallic og Specular til 0
+Klikk Roughness:
+Sett Roughness til 1
+(forberedelser siden vi skal bruke noe som heter toonshading)
+
+Klikk på diskett-ikonet for å lagre materialet,
+velg lagre,
+nå kan du se at filen med materialet er endret 
+
+Ctrl-S for å lagre scenen, velg Scenes-mappa, Lagre knappen
+
+La oss lage et nytt material for den andre spilleren
+Høyreklikk Cubedude.material filen, velg Dupliser
+Gi den navnet "CubedudeBlue.material"
+Dobbeltklikk det nye materialet
+Dra filen "11 Cubedude Blue.png" til Texture området
+Klikk på diskett-ikonet for å lagre materialet,
+Velg lagre,
+nå kan du se at filen med materialet er endret
+
+Neste er å legge til Capsule Collider på Cubedude.
+Velg Cubedude noden,
++ node, skriv "colli", velg "CollisionShape",
+klikk Shape <null>, velg "New CapsuleShape",
+klikk Transform,
+Sett Translation, y:1
+Sett Rotation, x:-90
+Juster Capsule colliderens størrelse
+så den passer figuren nokså bra.
+
+La oss sett Cubedude på riktige Kollisjonslag:
+Velg Cubedude noden,
+Under PhysicsBody, Collision sett:
+Layer: Players
+Mask:  Pitch, Ball og Players
+
+Ctrl-S for å lagre
