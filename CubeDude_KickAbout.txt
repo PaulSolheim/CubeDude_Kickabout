@@ -121,6 +121,8 @@ Klikk <null> ved siden av Shape, velg "new SphereShape"
 klikk på <SphereShape> og sett radius: 0.25
 Ctrl-S for å lagre Ball scenen.
 
+HIT - 1.Gang
+
 Klikk Play-knappen og sjekk om ballen ramler ned på banen.
 
 La oss sette opp Kollisjons-lag:
@@ -196,3 +198,99 @@ Layer: Players
 Mask:  Pitch, Ball og Players
 
 Ctrl-S for å lagre
+
+La oss legge til Cubedude.
+
+Åpne Game scenen
+velg Game noden
++ node velg "Node"
+Endre navn til "Players"
+Lenk inn Cubedude scenen
+endre navn til "Player1"
+
+Vi må legge til et skript for Cubedude:
+
+Gå til Cubedude scenen
+klikk på skript-ikonet for å legge til et skript
+velg Template "No Comments"
+klikk på mappa ved Søkesti:
+	Gå et nivå oppover ved å klikke "liten pil opp"
+	Klikk "Lag mappe"
+	skriv "Scripts", klikk OK
+	Klikk Lagre-knappen
+Klikk Lag knappen
+Nå har vi fått et nytt skript med bare en tom _ready() funksjon
+Slett _ready() funksjonen og pass linja.
+
+Skriv skriptet:
+
+var motion = Vector3()
+
+export var speed = 10
+
+const UP = Vector3(0,1,0)
+
+func _physics_process(delta):
+	move()
+
+func move():
+	if Input.is_action_pressed("ui_up") and not Input.is_action_pressed("ui_down"):
+		motion.z = -speed
+	elif Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
+		motion.z = speed
+	else:
+		motion.z = 0
+
+	if Input.is_action_pressed("ui_left") and not Input.is_action_pressed("ui_right"):
+		motion.x = -speed
+	elif Input.is_action_pressed("ui_right") and not Input.is_action_pressed("ui_left"):
+		motion.x = speed
+	else:
+		motion.x = 0
+	
+	move_and_slide(motion, UP)
+
+Test spillet og se om du kan styre "Player1" med piltastene.
+
+HIT - 2.Gang
+
+For å kunne sparke til ballen må vi legge til gravitasjon på spilleren.
+
+Gå til skriptet og legg til:
+
+const GRAVITY = -5
+
+func _physics_process(delta):
+	..
+	fall()
+	
+func fall():
+	if is_on_floor():
+		motion.y = 0
+	else:
+		motion.y = GRAVITY
+
+La oss fikse så vi kan sparke til ballen:
+
+Gå til Cubedude scenen
+La oss unngå at cubedude blir dyttet oppover av ballen.
+Klikk på rot-noden (cubedude)
+Klikk "Access lock" i inspektøren:
+skru på Linear Y
+skru på Angular Y
+
+Vi må også skru på kollisjons-oppdagelse på ballen
+Gå til Ball scenen
+klikk på rot-noden (Ball)
+I inspektøren under RigidBody
+Skru av "Can Sleep"
+Skru på "Continuous Cd"
+(kontinuerlig kollisjons sjekking)
+
+Ctrl-S for å lagre
+
+Test Spillet - Kan du sparke ballen?
+
+Yay! - Gratulerer!
+
+Vi fortsetter og gjør ferdig spillet over nyttår.

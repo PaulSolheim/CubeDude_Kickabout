@@ -14,6 +14,12 @@ config/name="CubeDude_Kickabout"
 run/main_scene="res://Scenes/gamepotet.tscn"
 config/icon="res://icon.png"
 
+[layer_names]
+
+3d_physics/layer_1="Pitch"
+3d_physics/layer_2="Ball"
+3d_physics/layer_3="Players"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
