@@ -275,7 +275,7 @@ La oss fikse så vi kan sparke til ballen:
 Gå til Cubedude scenen
 La oss unngå at cubedude blir dyttet oppover av ballen.
 Klikk på rot-noden (cubedude)
-Klikk "Access lock" i inspektøren:
+Klikk "Axis lock" i inspektøren:
 skru på Linear Y
 skru på Angular Y
 
@@ -291,6 +291,480 @@ Ctrl-S for å lagre
 
 Test Spillet - Kan du sparke ballen?
 
-Yay! - Gratulerer!
+La oss legge til mål:
 
-Vi fortsetter og gjør ferdig spillet over nyttår.
+Gå til Models/Goal mappa
+Dobbeltklikk "Goal.dae" filen,
+velg "New Inherited"
+Rename "Scene Root" til "Goal"
+Høyreklikk "Goal", klikk "Change Type",
+skriv "stat", velg "StaticBody", trykk "forandre" knappen
+Ctrl-S for å lagre, velg "scenes" mappa,  trykk lagre knappen
+
+La oss legge til kollisjons-soner for målet og nettet
+klikk på Goal mesh'n i hierarkiet
+Velg menyvalget:
+Mesh - Create Trimesh Collision Sibling
+klikk på Net mesh'n i hierarkiet
+Velg menyvalget:
+Mesh - Create Trimesh Static Body
+
+La oss sette opp kollisjonslagene for
+hver av de to Staticbody'ene:
+Klikk Goal i hierarkiet,
+Klikk Collision i Inspektøren
+Sett Mask til Ball og Players (fjern Pitch)
+
+Klikk StaticBody under Net i hierarkiet
+Klikk Collision i inspektøren
+Sett Mask til Ball og Players (fjern Pitch)
+Ctrl-S for å lagre
+
+Åpne Game Scenen (under scenes mappa)
+Klikk på toppnoden i hierarkiet
+
+klikk + ikonet, fjern bokstavene i søk-boksen,
+velg Node, klikk Lag knappen
+Gi noden navnet "Goals" (dobbeltklikk)
+Klikk lenke-ikonet, velg Goal-scenen
+Gi noden navnet Goal1
+Flytt målet til riktig posisjon på banen
+Ctrl-D for å lage en kopi
+Flytt til riktig sted, endre Y-rotasjon (-90 og 90)
+Ctrl-S for å lagre
+
+Test Spillet - Klarer du å score mål?
+
+HIT - 3.Gang
+
+--- Jeg har gjort dette ---
+Nettet kommer litt utenfor banen,
+La oss lage banen litt større
+Åpne Pitch scenen
+velg MeshInstance i hierarkiet
+klikk "mesh" ikonet
+Endre størrelsen til
+X:22 Y:16
+Vi må også endre kollisjons-sonen
+velg CollisionShape i hierarkiet
+Klikk "Pitch.tscn" ved Shape
+Endre Extents til
+X:11 og Z:8
+Ctrl-S for å lagre
+
+Gå til Game scenen
+Flytt målene så de passer banen
+
+La oss endre fargen på det ene målet til blå
+Endre navnet på Goal.material til GoalGreen.material
+Høyreklikk, Endre Navn
+Høyreklikk, Duplicate
+Endre navnet på kopien til GoalBlue.material
+DobbeltKlikk på GoalBlue.material
+Velg Blå farge under Albedo - Color
++ ikonet for å lagre fargen som preset
+Klikk GoalBlue pånytt
+Klikk Emission, velg den samme blåfargen (fra preset)
+Trykk Lagre-ikonet, velg Lagre
+
+Velg Goal1 i hierarkiet
+Høyreklikk, Velg Editable Children
+Velg Goal
+Dra materialet GoalBlue til <null> ved 0 under Material
+Ctrl-S for å lagre
+
+Test Spillet
+
+Utfordring:
+Kan du legge til kollisjons-soner
+på utsiden av banen?
+
+Min måte:
+Gå til Game scenen, velge topp-noden
++ ikon, velg Node, endre navn til "Limits"
++ ikon, skriv mesh, velg MeshInstance
+klikk <null> ved Mesh, velg New CubeMesh
+Sett, Transform, Translation, Z:-9
+Klikk Cube-ikonet ved Mesh, 
+Sett Size: X:22, Y:10, Z:2
+Klikk MeshInstance,
+Endre Transform, Translation Y:5 Z:-9
+Endre Navnet på MeshInstance til BackWall
+Velg Mesh - Create Convex Static Body
+(Så vi får kollisjons-soner)
+
+Ctrl-D for å lage en kopi
+Endre Navnet på kopien til FrontWall
+Endre Transform - Translation, Z:9
+
+Velg Limits i hierarkiet
++ ikonet, velg MeshInstance
+klikk <null> ved Mesh, velg New CubeMesh
+Sett, Transform, Translation, X:12 Y:5
+Klikk Cube-ikonet ved Mesh, 
+Sett Size: X:2, Y:10, Z:16
+Rename MeshInstance til RightWall
+Velg Mesh - Create Convex Static Body
+(Så vi får kollisjons-soner)
+
+Ctrl-D for å lage en kopi
+Rename til LeftWall
+Endre Transform, Translation: X:-12
+
+Gjør de fire veggene "usynlig" 
+ved å klikke på øye ikonet
+
+Test Spillet, stopper ballen riktig?
+
+Det er fremdeles litt kinkig når ballen havner i hjørnet
+eller på siden av målet.
+La oss gjøre det så ballen bare kan være på banen og i mål.
+
+Marker Alle veggene i hierarkiet
+Ctrl-D for å lage kopier
+(Kopiene har 2 tilslutt i navnet)
+
+Velg BackWall2 i hierarkiet, 
+skru på synlighet (øyet kommer frem)
+flytt veggen inn til sidelinjen på banen
+Gjør det samme for FrontWall2
+Gjør det samme for RigthWall og LeftWall,
+men ikke helt til linja så ballen kan gå i mål
+
+Ekspander alle 2-er veggene,
+Velg alle Static Body, Ctrl-Klikk
+Under Collision,
+Fjern alle fra Layer,
+Under Mask, Velg kun Ball
+
+Sett alle 2-er veggene til å være usynlige
+
+Test Spillet:
+	stopper ballen ved linja?
+	er det lettere å komme bak ballen ved linja og i hjørner?
+
+La oss fikse lys-setting så det ser bedre ut!
+Dobbeltklikk default_env.tres fila under res://
+Denne er satt opp som 
+"Default Environment" i Prosjektinnstillinger
+Sett
+Mode: "CustomColor"
+Color: Svart
+Energy: 0
+
+Ambient Light:
+Color: Litt lys blå-grønn farge
+Energy: 1
+Sky Contribution: 0
+
+Klikk Lagre-ikonet, velg Lagre
+
+La oss legge inn vår egen lyskilde:
+Velg topp-noden i Game scenen
++ ikonet, fjern evt. søketekst,
+velg Node, endre navnet til "Lights"
++ ikonet, skriv light
+(si litt om de forskjellige lyskildene)
+velg Directional Light
+Løft lyset opp og til et hjørne
+klikk roterings ikonet
+klikk T for å komme i "Local space modus"
+Dra i rotasjons-hjulene 
+så lyset peker inn mot midten av banen
+
+I Inspektøren, Under Light,
+Endre Color, prøv med forskjellige farger,
+en lysegul farge gir "ettermiddags-lys"
+
+Velg Shadow, Enabled on for å få skygger
+Sett fargen på skygger til noe annet enn svart
+f.eks. Mørkeblå
+Hvis du øker verdien for Contact blir
+det litt mørkere skygger nær kontaktflatene
+
+Hvis du vil ha "Toon" shading:
+søk i filsystem, skriv material
+dobbeltklikk ball.material
+under Parameters, Diffuse Mode velg "Toon",
+Klikk Lagre.ikonet, velg Lagre
+Gjør det samme for de to CubeDude materialene.
+
+START - 4.Gang
+
+La oss legge til animasjon for CubeDude:
+Gå til Cubedude scenen
+Gå til Skriptet (klikk Script)
+Legg til en ny funksjon:
+
+func _process(delta):
+	animate()
+
+Legg til en ny funksjon til:
+
+func animate():
+	if motion.length() > EPSILON:
+		if not $AnimationPlayer.is_playing():
+			$AnimationPlayer.play("Arms Cross Walk")
+	else:
+		$AnimationPlayer.stop()
+
+Gå til toppen av skriptet og definer EPSILON
+som en konstant:
+
+const EPSILON = 0.000001
+
+Test Spillet:
+	Får du animasjon når han beveger seg?
+	Cubedude svever litt over banen:
+		Gå til Pitch scenen
+		Velg MeshInstance i hierarkiet
+		Under Transform - Translation:
+			Endre Y til 0.1
+
+Test Spillet, det var bedre!
+
+La oss få han til å peke i riktig retning
+Gå til Cudedude skriptet
+Legg til en linje i _process funksjonen:
+
+	face_forward()
+	
+Lag en ny funksjon:
+
+func face_forward():
+	if not motion.x == 0 or not motion.z == 0:
+		look_at(Vector3(-motion.x, 0, -motion.z), UP)
+
+Test spillet
+
+Når han går diagonalt så går han fortere
+La oss fikse det,
+gå til move funksjonen
+endre den siste linja til:
+
+move_and_slide((motion.normalized() * speed), UP)
+
+endre de 4 linjene som bruker speed
+bytt ut speed med tallet 1
+motion.z = -speed	->	motion.z = -1
+motion.z = speed	->	motion.z = 1
+motion.x = -speed	->	motion.x = -1
+motion.x = speed	->	motion.x = 1
+
+gå til face_forward funksjonen og endre linja:
+look_at(Vector3(-motion.x, 0, -motion.z), UP)
+til:
+look_at(Vector3(-motion.x, 0, -motion.z)*speed, UP)
+
+Test Spillet
+	Det var bedre!
+
+La oss gjøre ballen lettere:
+Gå til Ball scenen
+Klikk "rot noden" i hierarkiet
+I Inspektøren, under RigidBody, endre
+Mass til 0.5
+Bounce til 0.5
+
+Test Spillet
+	juster Mass og Bounce til du er fornøyd
+
+La oss legge til en ny spiller
+Gå til Game scenen
+Marker Player1 i scenen
+Ctrl-D for å lage en kopi
+
+Marker Player2,
+Flytt Player2 på høyre side av midtstreken
+Velg Transform, Rotation
+Sett Y: 90
+
+Marker Player1,
+Flytt Player1 litt til venstre
+Høyreklikk, velg "Editable Children"
+Velg "Cube Dube" i hierarkiet under Player1
+I FilSystem (til venstre)
+gå til Models/Cubedude folderen
+Dra det blå materialet til
+Material 
+0 <null>
+
+Gå til Game scenen
+Velg Player2 i hierarkiet
+I Inspektøren, sett:
+"Player Id" til 2
+
+Test Spillet:
+	Kan du bevege Player1 med tastene "WSAD"?
+	Kan du bevege Player2 med pil-tastene?
+
+Kult! Sett dere sammen og spill mot hverandre.
+
+Legg inn 3D modeller rundt banen så det blir kult!
+F.eks. fra kenney.nl
+
+Start - 5.Gang (planlagt)
+
+Siden vi glemte å gange med speed i face_forward funksjonen,
+bruker spillerne for lang tid til å snu seg.
+
+gå til face_forward funksjonen og endre linja:
+look_at(Vector3(-motion.x, 0, -motion.z), UP)
+til:
+look_at(Vector3(-motion.x, 0, -motion.z)*speed, UP)
+
+
+Jeg har lagt til kollisjons-sone på målene
+og koblet et signal til Game skriptet
+som sender 2 hvis det scores på Goal1
+og sender 1 hvis det scores på Goal2
+
+Jeg har også lagt til en Timer på Game scenen
+med 2 sekunders ventetid (OneShot=true)
+
+La oss få spillerne til å "fryse"
+i 2 sekunder når noen scorer
+
+Gå til Player skriptet
+Lag en variabel på linje 4:
+
+var can_move = true
+
+endre _physics_process funksjonen
+så den gjør move() bare hvis can_move er sant
+
+if can_move:
+	move()
+	animate()			// Flyttet fra _process
+
+lag en ny funksjon:
+
+func can_move(value):
+	can_move = value
+
+Gå til Game skriptet
+gå til _on_GoalDetection_body_entered():
+legg til i funksjonen:
+
+	get_tree().call_group("player", "can_move", false)
+	$Timer.start()
+
+Gå Til Game scenen
+Velg Rotnoden (Game)
++ node, fjern søketeksten, velg Node
+Rename "Node" til "StartPositions"
++ node, skriv "pos", Velg Position3D
+Rename til "BallSpawn",
+Flytt den litt over banen
+Ctrl-D for å lage en kopi
+Rename den til "Player1Spawn"
+Flytt den litt til venstre
+Ctrl-D for å lage en kopi
+Rename den til "Player2Spawn"
+Flytt den litt til høyre
+
+Gå til skriptet
+
+I _on_Timer_timeout():
+Bytt ut "pass" med "reset_pitch()"
+
+I _ready():
+Bytt ut "pass" med "reset_pitch()"
+
+La oss lage denne funksjonen:
+
+func reset_pitch():
+	var BallSpawn = get_tree().get_root().find_node("BallSpawn", true, false)
+	Ball.translation = BallSpawn.translation
+	Ball.axis_lock_linear_x = false
+	Ball.axis_lock_linear_y = false
+	Ball.axis_lock_linear_z = false
+	get_tree().call_group("player", "reset")
+
+Gå til Player skriptet
+Lag en ny funksjon over move funksjonen:
+
+func reset():
+	var my_spawn = get_tree().get_root().find_node("Player%sSpawn" % player_id, true, false)
+	translation = my_spawn.translation
+	can_move(true)
+
+Test Spillet:
+	Starter spillerne midt på banen?
+	Starter de på nytt etter scoring?
+
+HIT - 5.Gang
+
+La oss holde orden på scoringer
+Gå til Game skriptet
+
+Lag 3 variabler fra linje 4:
+
+var Player1_score = 0
+var Player2_score = 0
+export var maximum_score = 2
+
+Legg til i _on_GoalDetection_body_entered
+før du starter Timer:
+	update_score(player_id)
+
+Lag en ny funksjon:
+
+func update_score(player):
+	var new_score
+	if player == 1:
+		Player1_score += 1
+		new_score = Player1_score
+	else:
+		Player2_score += 1
+		new_score = Player2_score
+	
+	$GUI.update_score(player, new_score)
+	check_game_over(new_score)
+
+func check_game_over(score):
+	pass
+
+Gå til GUI scenen,
+Gå til skriptet
+Lag en ny funksjon:
+
+func update_score(player, score):
+	var score_label = get_node("Banner/HBoxContainer/Player%sScore" % player)
+	score_label.text = str(score)
+
+Test Spillet:
+	Får du oppdatert score?
+
+Gå til Game skriptet
+Forandre check_game_over funksjonen til:
+
+func check_game_over(score):
+	if score == maximum_score:
+		$Timer.queue_free()
+		$GUI.game_over()
+
+Lag en ny funksjon:
+
+func restart_game():
+	get_tree().reload_current_scene()
+
+Gå til GUI skriptet
+Lag en ny funksjon:
+
+func game_over():
+	$Popup.popup_centered()
+
+forandre _on_Button_pressed funksjonen til:
+
+func _on_Button_pressed():
+	get_parent().restart_game()
+
+Test Spillet:
+	Får du Game Over etter 2 Mål?
+	Kan du starte spillet pånytt?
+	Endre maximum_score for å få lengre spill
+
+Gratulerer!
+	Nå kan du dekorere med 3D modeller
+	
