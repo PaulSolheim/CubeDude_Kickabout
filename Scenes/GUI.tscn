@@ -11,7 +11,7 @@
 
 default_font = ExtResource( 2 )
 
-[node name="GUI" type="CanvasLayer"]
+[node name="GUI" type="CanvasLayer" index="0"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -132,6 +132,7 @@ _sections_unfolded = [ "Theme" ]
 
 [node name="Popup" type="Popup" parent="." index="1"]
 
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

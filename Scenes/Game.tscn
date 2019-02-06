@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Pitch.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Models/Goal/GoalBlue.material" type="Material" id=7]
 [ext_resource path="res://Scenes/GUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/bear.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Handwagon.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -37,6 +39,7 @@ points = PoolVector3Array( -1, 5, 8, 1, 5, -8, 1, 5, 8, -1, 5, -8, -1, -5, 8, 1,
 [node name="Game" type="Spatial"]
 
 script = ExtResource( 1 )
+maximum_score = 2
 
 [node name="Pitch" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -448,6 +451,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51505, 0, 0 )
 [node name="Bear" parent="Decor" index="0" instance=ExtResource( 9 )]
 
 transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, 14, 0, 0 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Block" parent="Decor" index="1" instance=ExtResource( 10 )]
+
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2, -6 )
+
+[node name="Handwagon" parent="Decor" index="2" instance=ExtResource( 11 )]
+
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 12, 0, 4 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="body_entered" from="Goals/Goal1/GoalDetection" to="." method="_on_GoalDetection_body_entered" binds= [ 2 ]]
 

@@ -767,4 +767,120 @@ Test Spillet:
 
 Gratulerer!
 	Nå kan du dekorere med 3D modeller
+
+HIT - 6.Gang
+
+Legge til effekter:
+
+Åpne CubeDude scenen
+Velg rot-noden (den øverste noden)
++ knapp, skriv "part" (Particles velges), Lag-knappen
+Dra oppover med den grønne pilen så "skyen" kommer rett over hodet på spilleren.
+I Inspektøren, ekspander "Draw Passes"
+I Filsystem, bla deg frem til Models/Particles mappa
+Dra "star.mesh" til <null> ved Pass 1.
+I Inspektøren, klikk på stjerna
+Klikk <null> ved Material, velg "Last",
+Bla til "GFX" mappa, velg "ball.material"
+(hvis du vil ha annen farge, velg "New Spatialmaterial", velg farge, Lagre)
+Ekspander "Process Material", velg "New ParticlesMaterial"
+
+La oss endre størrelsen på stjernene:
+Klikk "ParticlesMaterial", ekspander "Scale"
+Sett Scale: 0.5
+Klikk "Particles" i scenen, ekspander "Time"
+Sett "Lifetime: 2"
+Klikk "ParticlesMaterial", ekspander "Gravity"
+Sett "Gravity y: 9.8"
+Klikk "Particles" i scenen,
+Sett avhuking for "One Shot"
+Endre "Amount" til 64
+Sett "Randomness" til 1
+Set "Explosiveness" til 0.5
+Klikk "ParticlesMaterial", Ekspander "Flags"
+Sett avhuking for "Rotate Y"
+Ekspander "Angular Velocity",
+Sett "Velocity" til 10
+Ekspander "Spread", Sett Spread til 180
+Ekspander "Radial Acc", Sett "Accel" til 10 (Sentripetal Aksellerasjon)
+Klikk "Particles" i scenen, Fjern avhuking for "Emitting on"
+Ctrl-S for å lagre
+
+Klikk "Script" på toppen
+Gå til bunnen av skriptet og lag en ny funksjon:
+
+func emit_particles():
+	$Particles.emitting = true
+
+Åpne Game scenen, Gå til skriptet
+I _on_GoalDetection_body_entered funksjonen
+Legg til:
+	get_tree().call_group("player", "emit_particles")
 	
+under tilsvarende med "can_move" 
+(enkleste er "kopier, lim inn, endre")
+
+Test i Spillet:
+	La oss fikse feilen
+
+Legg til så linja blir:
+	get_tree().call_group("player", "emit_particles", player_id)
+
+Gå til CubeDude skriptet,
+Endre funksjonen du lagde istad til:
+
+func emit_particles(player):
+	if player == player_id:
+		$Particles.emitting = true
+
+Test i Spillet:
+	Kult!
+	
+Hvis vi har tid igjen kan vi legge inn: 
+	lyd-effekter,
+	dimming av lys ved scoring
+	spot-lys på den som scorte
+
+I Game scenen
+Velg "Directional Light"
++ node, skriv "anim" (AnimationPlayer velges), Lag knappen
+New Animation, Kall den "Dim_Light"
+Klikk "Directional Light", klikk nøkkelen ved Energy
+Klikk ved 1 sekunder, sett Energy: 0, klikk nøkkelen ved Energy
+
+Velg "Directional Light"
+Klikk ikonet for å lage et nytt skript
+Velg "Scripts" mappa, Lagre, Lag knappen
+
+Lag 2 nye funksjoner:
+
+func goal_scored():
+	$AnimationPlayer.play("Dim_Light")
+
+func reset():
+	light_energy = 1
+
+Endre _ready funksjonen til:
+func _ready():
+	reset()
+
+Gå til scenen,
+Plasser "Directional Light"
+i en ny gruppe som vi kaller "lighting"
+(Game scenen, Directional Light, Node, Grupper, "lighting", Legg Til)
+
+Gå til Game skriptet,
+I _on_GoalDetection_body_entered funksjonen
+Legg til:
+	get_tree().call_group("lighting", "goal_scored")
+
+I reset_pitch funksjonen,
+Legg til:
+	get_tree().call_group("lighting", "reset")
+
+Test Spillet:
+	Dimmer lyset ved scoring?
+	Kommer lyset tilbake etterpå?
+	
+Gratulerer!
+Hvis du har tid og lyst kan du prøve å legge inn spot-lys ved scoring!
