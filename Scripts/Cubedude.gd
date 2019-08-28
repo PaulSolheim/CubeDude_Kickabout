@@ -60,4 +60,8 @@ func move():
 		motion.x = 0
 		
 	move_and_slide((motion.normalized() * speed), UP)
+
 	
+func emit_particles(player):
+    if player == player_id:
+        $Particles.emitting = true

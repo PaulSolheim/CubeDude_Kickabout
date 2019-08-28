@@ -25,6 +25,8 @@ func _on_GoalDetection_body_entered(body, player_id):
 	get_tree().call_group("player", "can_move", false)
 	update_score(player_id)
 	$Timer.start()
+	get_tree().call_group("player", "emit_particles", player_id)
+	
 
 func update_score(player):
 	var new_score
