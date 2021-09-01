@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Pitch.tscn" type="PackedScene" id=2]
@@ -12,462 +12,194 @@
 [ext_resource path="res://Scenes/Block.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/Handwagon.tscn" type="PackedScene" id=11]
 
-[sub_resource type="CubeMesh" id=1]
+[sub_resource type="PhysicsMaterial" id=1]
+bounce = 0.5
 
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+[sub_resource type="CubeMesh" id=2]
 size = Vector3( 22, 10, 2 )
-subdivide_width = 0
-subdivide_height = 0
-subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=2]
-
+[sub_resource type="ConvexPolygonShape" id=3]
 points = PoolVector3Array( -11, 5, 1, 11, 5, -1, 11, 5, 1, -11, 5, -1, -11, -5, 1, 11, -5, -1, 11, -5, 1, -11, -5, -1, 11, 5, 1, -11, 5, -1, 11, 5, -1, -11, 5, 1, 11, -5, 1, -11, -5, -1, 11, -5, -1, -11, -5, 1, 11, 5, 1, -11, -5, 1, -11, 5, 1, 11, -5, 1, 11, 5, -1, -11, -5, -1, -11, 5, -1, 11, -5, -1 )
 
-[sub_resource type="CubeMesh" id=3]
-
-custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+[sub_resource type="CubeMesh" id=4]
 size = Vector3( 2, 10, 16 )
-subdivide_width = 0
-subdivide_height = 0
-subdivide_depth = 0
 
-[sub_resource type="ConvexPolygonShape" id=4]
-
+[sub_resource type="ConvexPolygonShape" id=5]
 points = PoolVector3Array( -1, 5, 8, 1, 5, -8, 1, 5, 8, -1, 5, -8, -1, -5, 8, 1, -5, -8, 1, -5, 8, -1, -5, -8, 1, 5, 8, -1, 5, -8, 1, 5, -8, -1, 5, 8, 1, -5, 8, -1, -5, -8, 1, -5, -8, -1, -5, 8, 1, 5, 8, -1, -5, 8, -1, 5, 8, 1, -5, 8, 1, 5, -8, -1, -5, -8, -1, 5, -8, 1, -5, -8 )
 
-[node name="Game" type="Spatial" index="0"]
-
+[node name="Game" type="Spatial"]
 script = ExtResource( 1 )
-maximum_score = 2
 
-[node name="Pitch" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Pitch" parent="." instance=ExtResource( 2 )]
 
-[node name="Ball" parent="." index="1" instance=ExtResource( 3 )]
-
+[node name="Ball" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+physics_material_override = SubResource( 1 )
 
-[node name="Camera" type="Camera" parent="." index="2"]
-
+[node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 8, 13 )
-keep_aspect = 1
-cull_mask = 1048575
-environment = null
-h_offset = 0.0
-v_offset = 0.0
-doppler_tracking = 0
-projection = 0
-current = false
-fov = 70.0
-size = 1.0
-near = 0.05
-far = 100.0
-_sections_unfolded = [ "Transform" ]
 
-[node name="Players" type="Node" parent="." index="3"]
+[node name="Players" type="Node" parent="."]
 
-[node name="Player1" parent="Players" index="0" instance=ExtResource( 4 )]
-
-editor/display_folded = true
-transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, -1.56137, 0, 0 )
-_sections_unfolded = [ "Axis Lock", "Collision", "Transform" ]
+[node name="Player1" parent="Players" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.56137, 0, 0 )
 
 [node name="Cube Dube" parent="Players/Player1/Armature/Skeleton" index="0"]
-
 material/0 = ExtResource( 5 )
-_sections_unfolded = [ "material" ]
 
-[node name="Player2" parent="Players" index="1" instance=ExtResource( 4 )]
-
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, 2.49156, 0, -1.77159e-007 )
-_sections_unfolded = [ "Axis Lock", "Collision", "Transform" ]
+[node name="Player2" parent="Players" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.49156, 0, -1.77159e-07 )
 player_id = 2
 
-[node name="Goals" type="Node" parent="." index="4"]
+[node name="Goals" type="Node" parent="."]
 
-editor/display_folded = true
-
-[node name="Goal1" parent="Goals" index="0" instance=ExtResource( 6 )]
-
-editor/display_folded = true
-transform = Transform( -4.37114e-008, 0, -1, 0, 1, 0, 1, 0, -4.37114e-008, -9.35, 0, -0.129107 )
-_sections_unfolded = [ "Collision", "Transform" ]
+[node name="Goal1" parent="Goals" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.35, 0, -0.129107 )
 
 [node name="Goal" parent="Goals/Goal1" index="0"]
-
 material/0 = ExtResource( 7 )
-_sections_unfolded = [ "material" ]
 
-[node name="Goal2" parent="Goals" index="1" instance=ExtResource( 6 )]
+[node name="Goal2" parent="Goals" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.17627, 0, -0.129107 )
 
-editor/display_folded = true
-transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 9.17627, 0, -0.129107 )
-_sections_unfolded = [ "Collision", "Transform" ]
+[node name="Limits" type="Node" parent="."]
 
-[node name="Limits" type="Node" parent="." index="5"]
-
-editor/display_folded = true
-
-[node name="BackWall" type="MeshInstance" parent="Limits" index="0"]
-
-editor/display_folded = true
+[node name="BackWall" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -9 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
-skeleton = NodePath("..")
+mesh = SubResource( 2 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/BackWall" index="0"]
+[node name="StaticBody" type="StaticBody" parent="Limits/BackWall"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="Limits/BackWall/StaticBody"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/BackWall/StaticBody" index="0"]
-
-shape = SubResource( 2 )
-disabled = false
-
-[node name="BackWall2" type="MeshInstance" parent="Limits" index="1"]
-
-editor/display_folded = true
+[node name="BackWall2" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -6.67929 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
-skeleton = NodePath("..")
+mesh = SubResource( 2 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/BackWall2" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
+[node name="StaticBody" type="StaticBody" parent="Limits/BackWall2"]
 collision_layer = 0
 collision_mask = 2
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/BackWall2/StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="Limits/BackWall2/StaticBody"]
+shape = SubResource( 3 )
 
-shape = SubResource( 2 )
-disabled = false
-
-[node name="FrontWall" type="MeshInstance" parent="Limits" index="2"]
-
-editor/display_folded = true
+[node name="FrontWall" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 9 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
-skeleton = NodePath("..")
+mesh = SubResource( 2 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/FrontWall" index="0"]
+[node name="StaticBody" type="StaticBody" parent="Limits/FrontWall"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="Limits/FrontWall/StaticBody"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/FrontWall/StaticBody" index="0"]
-
-shape = SubResource( 2 )
-disabled = false
-
-[node name="FrontWall2" type="MeshInstance" parent="Limits" index="3"]
-
-editor/display_folded = true
+[node name="FrontWall2" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 7.18127 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 1 )
-skeleton = NodePath("..")
+mesh = SubResource( 2 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/FrontWall2" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
+[node name="StaticBody" type="StaticBody" parent="Limits/FrontWall2"]
 collision_layer = 0
 collision_mask = 2
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/FrontWall2/StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="Limits/FrontWall2/StaticBody"]
+shape = SubResource( 3 )
 
-shape = SubResource( 2 )
-disabled = false
-
-[node name="RightWall" type="MeshInstance" parent="Limits" index="4"]
-
-editor/display_folded = true
+[node name="RightWall" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 5, 0 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
-skeleton = NodePath("..")
+mesh = SubResource( 4 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/RightWall" index="0"]
+[node name="StaticBody" type="StaticBody" parent="Limits/RightWall"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="Limits/RightWall/StaticBody"]
+shape = SubResource( 5 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/RightWall/StaticBody" index="0"]
-
-shape = SubResource( 4 )
-disabled = false
-
-[node name="RightWall2" type="MeshInstance" parent="Limits" index="5"]
-
-editor/display_folded = true
+[node name="RightWall2" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2375, 5, 0 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
-skeleton = NodePath("..")
+mesh = SubResource( 4 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/RightWall2" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
+[node name="StaticBody" type="StaticBody" parent="Limits/RightWall2"]
 collision_layer = 0
 collision_mask = 2
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/RightWall2/StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="Limits/RightWall2/StaticBody"]
+shape = SubResource( 5 )
 
-shape = SubResource( 4 )
-disabled = false
-
-[node name="LeftWall" type="MeshInstance" parent="Limits" index="6"]
-
-editor/display_folded = true
+[node name="LeftWall" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 5, 0 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
-skeleton = NodePath("..")
+mesh = SubResource( 4 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/LeftWall" index="0"]
+[node name="StaticBody" type="StaticBody" parent="Limits/LeftWall"]
 
-input_ray_pickable = true
-input_capture_on_drag = false
-collision_layer = 1
-collision_mask = 1
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="Limits/LeftWall/StaticBody"]
+shape = SubResource( 5 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/LeftWall/StaticBody" index="0"]
-
-shape = SubResource( 4 )
-disabled = false
-
-[node name="LeftWall2" type="MeshInstance" parent="Limits" index="7"]
-
-editor/display_folded = true
+[node name="LeftWall2" type="MeshInstance" parent="Limits"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3109, 5, 0 )
 visible = false
-layers = 1
-material_override = null
-cast_shadow = 1
-extra_cull_margin = 0.0
-use_in_baked_light = false
-lod_min_distance = 0.0
-lod_min_hysteresis = 0.0
-lod_max_distance = 0.0
-lod_max_hysteresis = 0.0
-mesh = SubResource( 3 )
-skeleton = NodePath("..")
+mesh = SubResource( 4 )
 material/0 = null
-_sections_unfolded = [ "Transform" ]
 
-[node name="StaticBody" type="StaticBody" parent="Limits/LeftWall2" index="0"]
-
-input_ray_pickable = true
-input_capture_on_drag = false
+[node name="StaticBody" type="StaticBody" parent="Limits/LeftWall2"]
 collision_layer = 0
 collision_mask = 2
-friction = 1.0
-bounce = 0.0
-constant_linear_velocity = Vector3( 0, 0, 0 )
-constant_angular_velocity = Vector3( 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Limits/LeftWall2/StaticBody" index="0"]
+[node name="CollisionShape" type="CollisionShape" parent="Limits/LeftWall2/StaticBody"]
+shape = SubResource( 5 )
 
-shape = SubResource( 4 )
-disabled = false
-
-[node name="Timer" type="Timer" parent="." index="6"]
-
-process_mode = 1
+[node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-autostart = false
 
-[node name="GUI" parent="." index="7" instance=ExtResource( 8 )]
+[node name="GUI" parent="." instance=ExtResource( 8 )]
 
-[node name="Lights" type="Node" parent="." index="8"]
+[node name="Lights" type="Node" parent="."]
 
-editor/display_folded = true
-
-[node name="DirectionalLight" type="DirectionalLight" parent="Lights" index="0"]
-
+[node name="DirectionalLight" type="DirectionalLight" parent="Lights"]
 transform = Transform( 0.824856, -0.201273, 0.528301, 0, 0.934479, 0.356019, -0.565343, -0.293665, 0.77081, 9.16426, 14.4938, 16.995 )
-layers = 1
 light_color = Color( 0.988281, 0.94648, 0.501862, 1 )
-light_energy = 1.0
-light_indirect_energy = 1.0
-light_negative = false
-light_specular = 0.5
-light_bake_mode = 1
-light_cull_mask = -1
 shadow_enabled = true
 shadow_color = Color( 0.0285187, 0.040985, 0.347656, 1 )
-shadow_bias = 0.1
-shadow_contact = 0.0
-shadow_reverse_cull_face = false
-editor_only = false
-directional_shadow_mode = 2
-directional_shadow_split_1 = 0.1
-directional_shadow_split_2 = 0.2
-directional_shadow_split_3 = 0.5
-directional_shadow_blend_splits = false
-directional_shadow_normal_bias = 0.8
-directional_shadow_bias_split_scale = 0.25
-directional_shadow_depth_range = 0
 directional_shadow_max_distance = 200.0
-_sections_unfolded = [ "Shadow" ]
 
-[node name="startpos" type="Node" parent="." index="9"]
+[node name="startpos" type="Node" parent="."]
 
-editor/display_folded = true
-
-[node name="BallSpawn" type="Position3D" parent="startpos" index="0"]
-
+[node name="BallSpawn" type="Position3D" parent="startpos"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17969, 0 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="Player1Spawn" type="Position3D" parent="startpos" index="1"]
-
+[node name="Player1Spawn" type="Position3D" parent="startpos"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.37756, 0, 0 )
 
-[node name="Player2Spawn" type="Position3D" parent="startpos" index="2"]
-
+[node name="Player2Spawn" type="Position3D" parent="startpos"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.51505, 0, 0 )
 
-[node name="Decor" type="Node" parent="." index="10"]
+[node name="Decor" type="Node" parent="."]
 
-[node name="Bear" parent="Decor" index="0" instance=ExtResource( 9 )]
-
+[node name="Bear" parent="Decor" instance=ExtResource( 9 )]
 transform = Transform( -0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, -0.642788, 14, 0, 0 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="Block" parent="Decor" index="1" instance=ExtResource( 10 )]
-
+[node name="Block" parent="Decor" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2, -6 )
 
-[node name="Handwagon" parent="Decor" index="2" instance=ExtResource( 11 )]
-
+[node name="Handwagon" parent="Decor" instance=ExtResource( 11 )]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 12, 0, 4 )
-_sections_unfolded = [ "Transform" ]
 
 [connection signal="body_entered" from="Goals/Goal1/GoalDetection" to="." method="_on_GoalDetection_body_entered" binds= [ 2 ]]
-
 [connection signal="body_entered" from="Goals/Goal2/GoalDetection" to="." method="_on_GoalDetection_body_entered" binds= [ 1 ]]
-
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-
 
 [editable path="Players/Player1"]
 [editable path="Goals/Goal1"]
