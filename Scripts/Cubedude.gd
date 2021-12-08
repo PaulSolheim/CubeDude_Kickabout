@@ -63,5 +63,5 @@ func move():
 
 	
 func emit_particles(player):
-    if player == player_id:
-        $Particles.emitting = true
+	if player == player_id:
+		$Particles.emitting = true
