@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/pirate_captain.obj-19c49c13c5ba3b598c379d6f479d546d.mesh"
+
+[deps]
+
+files=[ "res://.import/pirate_captain.obj-19c49c13c5ba3b598c379d6f479d546d.mesh" ]
+
+source_file="res://Models/characters/pirate_captain.obj"
+dest_files=[ "res://.import/pirate_captain.obj-19c49c13c5ba3b598c379d6f479d546d.mesh", "res://.import/pirate_captain.obj-19c49c13c5ba3b598c379d6f479d546d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
